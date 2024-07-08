@@ -1,13 +1,13 @@
-package com.a29340.projectmanager;
+package com.a29340.kantastic;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ProjectManagerApplication {
+public class KantasticApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ProjectManagerApplication.class, args);
+        SpringApplication.run(KantasticApplication.class, args);
     }
 
 }
