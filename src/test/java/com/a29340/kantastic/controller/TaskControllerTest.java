@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 @SpringBootTest
 @Transactional
 class TaskControllerTest {
@@ -23,6 +25,8 @@ class TaskControllerTest {
     @BeforeEach
     public void setUp() {
         repo.save(new Task(1L, "Test Task", "Test Description", 0L));
+        repo.save(new Task(2L, "Test Task2", "Test Description2", 0L));
+        repo.save(new Task(3L, "Test Task3", "Test Description3", 1L));
     }
 
     @Test
@@ -33,5 +37,13 @@ class TaskControllerTest {
         Assertions.assertEquals("Test Description", taskDTO.getDescription());
         Assertions.assertEquals(0L, taskDTO.getStageId());
     }
+
+    @Test
+    public void shouldGetTaskFromStageId() {
+        List<TaskDTO> taskDTOs = controller.getTasks(0L);
+        Assertions.assertEquals(2, taskDTOs.size());
+        Assertions.assertEquals(0L, taskDTOs.get(0).getStageId());
+    }
+
 
 }
