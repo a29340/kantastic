@@ -8,7 +8,7 @@ import org.mapstruct.MappingConstants;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface BoardMapper {
 
-    public BoardDTO boardToBoardDTO(Board board);
-    public Board boardDTOToBoard(BoardDTO boardDTO);
+    BoardDTO boardToBoardDTO(Board board);
+    Board boardDTOToBoard(BoardDTO boardDTO);
 
 }
