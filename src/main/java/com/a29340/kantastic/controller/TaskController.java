@@ -4,11 +4,10 @@ import com.a29340.kantastic.dto.TaskDTO;
 import com.a29340.kantastic.dto.mapper.TaskMapper;
 import com.a29340.kantastic.model.Task;
 import com.a29340.kantastic.repository.TaskRepository;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +33,13 @@ public class TaskController {
     public List<TaskDTO> getTasks(@RequestParam @NonNull Long stageId) {
         List<Task> stages =  repo.findByStageId(stageId);
         return stages.stream().map(mapper::taskToTaskDTO).toList();
+    }
+
+    @PostMapping("/task")
+    public ResponseEntity<TaskDTO> createTask(@RequestBody @Valid TaskDTO taskDTO) {
+        Task task = mapper.taskDTOToTask(taskDTO);
+        Task saved = repo.save(task);
+        return ResponseEntity.ok(mapper.taskToTaskDTO(saved));
     }
 
 }

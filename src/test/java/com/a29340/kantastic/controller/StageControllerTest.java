@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -43,6 +45,19 @@ class StageControllerTest {
         List<StageDTO> stageDTO = controller.getStages(0L);
         Assertions.assertEquals(2, stageDTO.size());
         Assertions.assertEquals(0L, stageDTO.get(0).getBoardId());
+    }
+
+    @Test
+    void shouldCreateStage() {
+        StageDTO stageDTO = new StageDTO();
+        stageDTO.setId(10L);
+        stageDTO.setDescription("Test Description");
+        stageDTO.setName("Test Stage");
+        stageDTO.setBoardId(5L);
+        ResponseEntity<StageDTO> response = controller.createStage(stageDTO);
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assertions.assertNotNull(response.getBody());
+        Assertions.assertEquals(10L, response.getBody().getId());
     }
 
 

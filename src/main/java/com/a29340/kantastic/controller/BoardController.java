@@ -4,13 +4,15 @@ import com.a29340.kantastic.dto.BoardDTO;
 import com.a29340.kantastic.dto.mapper.BoardMapper;
 import com.a29340.kantastic.model.Board;
 import com.a29340.kantastic.repository.BoardRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @RestController
+@Transactional
 public class BoardController {
 
     private final BoardRepository repo;
@@ -25,6 +27,13 @@ public class BoardController {
     public BoardDTO getBoard(@PathVariable Long id) {
         Optional<Board> board = repo.findById(id);
         return mapper.boardToBoardDTO(board.orElse(null));
+    }
+
+    @PostMapping("/board")
+    public ResponseEntity<BoardDTO> createBoard(@RequestBody @Valid BoardDTO boardDTO) {
+        Board board = mapper.boardDTOToBoard(boardDTO);
+        Board saved = repo.save(board);
+        return ResponseEntity.ok(mapper.boardToBoardDTO(saved));
     }
 
 }

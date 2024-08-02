@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -46,4 +48,16 @@ class TaskControllerTest {
     }
 
 
+    @Test
+    void shouldCreateTask() {
+        TaskDTO taskDTO = new TaskDTO();
+        taskDTO.setId(10L);
+        taskDTO.setDescription("Test Description");
+        taskDTO.setName("Test Task");
+        taskDTO.setStageId(5L);
+        ResponseEntity<TaskDTO> response = controller.createTask(taskDTO);
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assertions.assertNotNull(response.getBody());
+        Assertions.assertEquals(10L, response.getBody().getId());
+    }
 }
