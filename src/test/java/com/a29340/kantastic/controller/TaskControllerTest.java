@@ -60,4 +60,11 @@ class TaskControllerTest {
         Assertions.assertNotNull(response.getBody());
         Assertions.assertEquals(10L, response.getBody().getId());
     }
+
+    @Test
+    void shouldDeleteTask() {
+        controller.deleteTask(1L);
+        TaskDTO task = controller.getTask(1L);
+        Assertions.assertNull(task);
+    }
 }

@@ -44,4 +44,9 @@ public class StageController {
         return ResponseEntity.ok(mapper.stageToStageDTO(saved));
     }
 
+    @DeleteMapping("/stage/{id}")
+    public ResponseEntity<?> deleteStage(@PathVariable Long id) {
+        repo.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
 }

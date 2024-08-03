@@ -47,4 +47,10 @@ class BoardControllerTest {
         Assertions.assertEquals(10L, response.getBody().getId());
     }
 
+    @Test
+    void shouldDeleteBoard() {
+        controller.deleteBoard(1L);
+        BoardDTO board = controller.getBoard(1L);
+        Assertions.assertNull(board);
+    }
 }

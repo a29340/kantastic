@@ -42,4 +42,10 @@ public class TaskController {
         return ResponseEntity.ok(mapper.taskToTaskDTO(saved));
     }
 
+    @DeleteMapping("/task/{id}")
+    public ResponseEntity<?> deleteTask(@PathVariable Long id) {
+        repo.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
 }

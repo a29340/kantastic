@@ -36,4 +36,10 @@ public class BoardController {
         return ResponseEntity.ok(mapper.boardToBoardDTO(saved));
     }
 
+    @DeleteMapping("/board/{id}")
+    public ResponseEntity<?> deleteBoard(@PathVariable Long id) {
+        repo.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
 }

@@ -60,5 +60,11 @@ class StageControllerTest {
         Assertions.assertEquals(10L, response.getBody().getId());
     }
 
+    @Test
+    void shouldDeleteStage() {
+        controller.deleteStage(1L);
+        StageDTO stage = controller.getStage(1L);
+        Assertions.assertNull(stage);
+    }
 
 }
