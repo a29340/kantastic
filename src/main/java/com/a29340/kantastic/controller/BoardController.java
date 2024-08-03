@@ -6,10 +6,14 @@ import com.a29340.kantastic.model.Board;
 import com.a29340.kantastic.repository.BoardRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @Transactional
@@ -21,6 +25,13 @@ public class BoardController {
     public BoardController(BoardMapper mapper, BoardRepository repo) {
         this.mapper = mapper;
         this.repo = repo;
+    }
+
+    @GetMapping("/boards")
+    public ResponseEntity<List<BoardDTO>> getBoards(@RequestParam @NonNull int size, @RequestParam @NonNull int page) {
+        List<Board> boards = repo.findAll(Pageable.ofSize(size).withPage(page)).getContent();
+        List<BoardDTO> boardDTOS = boards.stream().map(mapper::boardToBoardDTO).collect(Collectors.toList());
+        return ResponseEntity.ok(boardDTOS);
     }
 
     @GetMapping("/board/{id}")
