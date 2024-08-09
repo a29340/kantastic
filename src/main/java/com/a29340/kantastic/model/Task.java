@@ -11,15 +11,17 @@ public class Task {
     private String name;
     private String description;
     private Long stageId;
+    private Long boardId;
 
     public Task() {
     }
 
-    public Task(Long id, String name, String description, Long stageId) {
+    public Task(Long id, String name, String description, Long stageId, Long boardId) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.stageId = stageId;
+        this.boardId = boardId;
     }
 
     public void setId(Long id) {
@@ -52,5 +54,13 @@ public class Task {
 
     public void setStageId(Long stageId) {
         this.stageId = stageId;
+    }
+
+    public Long getBoardId() {
+        return boardId;
+    }
+
+    public void setBoardId(Long boardId) {
+        this.boardId = boardId;
     }
 }

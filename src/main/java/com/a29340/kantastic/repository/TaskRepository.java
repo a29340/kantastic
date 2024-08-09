@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findByStageId(Long stageId);
+
+    List<Task> findByBoardId(Long boardId);
 }

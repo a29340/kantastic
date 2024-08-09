@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 @Transactional
@@ -26,9 +27,9 @@ class TaskControllerTest {
 
     @BeforeEach
     public void setUp() {
-        repo.save(new Task(1L, "Test Task", "Test Description", 0L));
-        repo.save(new Task(2L, "Test Task2", "Test Description2", 0L));
-        repo.save(new Task(3L, "Test Task3", "Test Description3", 1L));
+        repo.save(new Task(1L, "Test Task", "Test Description", 0L, 0L));
+        repo.save(new Task(2L, "Test Task2", "Test Description2", 0L, 0L));
+        repo.save(new Task(3L, "Test Task3", "Test Description3", 1L, 0L));
     }
 
     @Test
@@ -42,7 +43,9 @@ class TaskControllerTest {
 
     @Test
     public void shouldGetTaskFromStageId() {
-        List<TaskDTO> taskDTOs = controller.getTasks(0L);
+        ResponseEntity<List<TaskDTO>> response = controller.getTasks(Optional.of(0L), Optional.empty());
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+        List<TaskDTO> taskDTOs = response.getBody();
         Assertions.assertEquals(2, taskDTOs.size());
         Assertions.assertEquals(0L, taskDTOs.get(0).getStageId());
     }

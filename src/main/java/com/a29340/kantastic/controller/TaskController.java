@@ -30,9 +30,19 @@ public class TaskController {
     }
 
     @GetMapping("/tasks")
-    public List<TaskDTO> getTasks(@RequestParam @NonNull Long stageId) {
-        List<Task> stages =  repo.findByStageId(stageId);
-        return stages.stream().map(mapper::taskToTaskDTO).toList();
+    public ResponseEntity<List<TaskDTO>> getTasks(@RequestParam Optional<Long> stageId,
+                                                  @RequestParam Optional<Long> boardId) {
+        List<TaskDTO> dtos;
+        if (stageId.isPresent()) {
+            List<Task> stages =  repo.findByStageId(stageId.get());
+            dtos = stages.stream().map(mapper::taskToTaskDTO).toList();
+            return ResponseEntity.ok(dtos);
+        } else if (boardId.isPresent()) {
+            List<Task> stages =  repo.findByBoardId(boardId.get());
+            dtos = stages.stream().map(mapper::taskToTaskDTO).toList();
+            return ResponseEntity.ok(dtos);
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @PostMapping("/task")

@@ -67,4 +67,7 @@ databaseChangeLog:
               - column:
                   name: stage_id
                   type: BIGINT
+              - column:
+                  name: board_id
+                  type: BIGINT
             tableName: task
